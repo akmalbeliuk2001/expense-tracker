@@ -5,6 +5,7 @@ interface InputBaseProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name?: string;
   className?: string;
+  autoComplete: string;
 }
 
 export default function InputBase({
@@ -14,6 +15,7 @@ export default function InputBase({
   name,
   placeholder,
   className = "",
+  autoComplete = "off",
   ...props
 }: InputBaseProps) {
   return (
@@ -24,6 +26,7 @@ export default function InputBase({
       name={name}
       placeholder={placeholder}
       className={`${className}`}
+      autoComplete={autoComplete}
       {...props}
     />
   );
