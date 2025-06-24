@@ -1,6 +1,7 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Afacad_Flux } from "next/font/google";
-import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
 
 const afacadFlux = Afacad_Flux({
   variable: "--font-geist-sans",
@@ -19,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${afacadFlux.className}`}>{children}</body>
+      <body className={`${afacadFlux.className}`}>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

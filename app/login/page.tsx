@@ -3,6 +3,7 @@
 import Link from "next/link";
 import React from "react";
 
+import { login } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -19,8 +20,13 @@ export default function LoginPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setDataUser({ ...dataUser, [e.target.name]: e.target.value });
 
-  const handleLogin = () => {
-    console.log("Login");
+  const handleLogin = async () => {
+    try {
+      await login(dataUser.email, dataUser.password);
+      router.push("/dashboard");
+    } catch (err: any) {
+      console.log(err.message);
+    }
   };
 
   return (
