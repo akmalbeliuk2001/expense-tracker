@@ -5,6 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
+import HeaderActions from "@/components/molecules/HeaderAction";
 import TransactionLists from "@/components/organisms/TransactionLists";
 import SaldoInformation from "@/components/molecules/SaldoInformation";
 import TransactionForm from "@/components/molecules/TransactionForm";
@@ -27,16 +28,19 @@ export default function DashboardPage() {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className="w-full max-w-[1024px] mx-auto flex gap-x-4 ">
-        <div className="w-full">
-          <TransactionLists
-            user={user}
-            setTotalExpends={setTotalExpends}
-            addTransaction={toggleShowInput}
-          />
-        </div>
-        <div className="w-full max-w-[300px]">
-          <SaldoInformation user={user} totalExpends={totalExpends} />
+      <div className="w-full max-w-[1024px] mx-auto">
+        <HeaderActions />
+        <div className="flex gap-x-4 mt-8">
+          <div className="w-full">
+            <TransactionLists
+              user={user}
+              setTotalExpends={setTotalExpends}
+              addTransaction={toggleShowInput}
+            />
+          </div>
+          <div className="w-full max-w-[300px]">
+            <SaldoInformation user={user} totalExpends={totalExpends} />
+          </div>
         </div>
       </div>
       {showTransactionForm && (
