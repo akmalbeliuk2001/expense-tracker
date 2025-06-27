@@ -36,7 +36,6 @@ export default function SaldoInformation({
       uid,
       (dataUser: { income: IncomeItem[] }) => {
         if (dataUser) {
-          console.log("Data usernya", dataUser);
           setIncomes(dataUser.income);
         } else {
           console.warn("User document not found");
@@ -46,6 +45,7 @@ export default function SaldoInformation({
 
     return () => unsubscribe(); // stop listener saat unmount
   }, [user]);
+
   return (
     <div className="w-full border-2 rounded-xl p-4 h-max text-lg">
       <div className="flex flex-col gap-y-1 pb-3">

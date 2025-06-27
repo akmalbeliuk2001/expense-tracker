@@ -15,6 +15,7 @@ interface User {
 interface TransactionListsProps {
   user: User;
   setTotalExpends: (total: number) => void;
+  addTransaction: () => void;
 }
 
 export default function TransactionLists({
