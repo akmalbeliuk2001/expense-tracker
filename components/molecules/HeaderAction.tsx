@@ -7,7 +7,6 @@ import { logout } from "@/lib/auth";
 import { IoLogOut } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
 
-import Overlay from "@/components/atoms/Overlay";
 import UserForm from "@/components/molecules/UserForm";
 
 export default function HeaderActions() {
@@ -28,9 +27,7 @@ export default function HeaderActions() {
   return (
     <>
       {showUserForm && (
-        <Overlay>
-          <UserForm onCancel={toggleShowUserForm} />
-        </Overlay>
+        <UserForm onCancel={toggleShowUserForm} typeForm="edit" />
       )}
 
       <div className="w-full flex justify-end items-center gap-x-2 mb-4">

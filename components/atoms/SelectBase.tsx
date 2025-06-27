@@ -1,3 +1,18 @@
+import { ChangeEvent, SelectHTMLAttributes } from "react";
+
+interface Option {
+  id: string | number;
+  label: string;
+}
+
+interface SelectBaseProps extends SelectHTMLAttributes<HTMLSelectElement> {
+  name: string;
+  value: string | number;
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  options: Option[];
+  className?: string;
+}
+
 export default function SelectBase({
   name,
   value,
@@ -5,7 +20,7 @@ export default function SelectBase({
   options = [],
   className = "",
   ...props
-}) {
+}: SelectBaseProps) {
   return (
     <select
       name={name}

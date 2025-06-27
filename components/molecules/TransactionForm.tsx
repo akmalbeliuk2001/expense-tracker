@@ -1,20 +1,44 @@
 "use client";
 
-import { format } from "date-fns";
+import { ChangeEvent } from "react";
 import { useEffect, useState } from "react";
-import ButtonBase from "../atoms/ButtonBase";
-import InputBase from "../atoms/InputBase";
-import SelectBase from "../atoms/SelectBase";
+import { useAuth } from "@/context/AuthContext";
 import { addTransaction, updateTransaction } from "@/lib/firestore";
+import { Timestamp } from "firebase/firestore";
 
 import Overlay from "../atoms/Overlay";
+import InputBase from "../atoms/InputBase";
+import ButtonBase from "../atoms/ButtonBase";
+import SelectBase from "../atoms/SelectBase";
+
+interface RawTransaction {
+  id: string;
+  nominal: number;
+  category: string;
+  describtions: string;
+  date: Timestamp;
+  createAt: Timestamp;
+}
+
+interface InputTransaction {
+  nominal: string;
+  category: string;
+  describtions: string;
+  date: string;
+}
+
+interface TransactionFormProps {
+  onCancel: () => void;
+  dataTransaction: RawTransaction;
+  formType: "input" | "edit";
+}
 
 export default function TransactionForm({
   onCancel,
-  user,
-  dataTransaction = [],
+  dataTransaction,
   formType = "input",
-}) {
+}: TransactionFormProps) {
+  const { user } = useAuth();
   const selectOptions = [
     { id: "", label: "Pilih Kategori" },
     { id: "makan", label: "Makan" },
@@ -24,45 +48,53 @@ export default function TransactionForm({
   ];
   const [docId, setDocId] = useState("");
 
-  const [inputTransaction, setInputTransaction] = useState({
+  const [inputTransaction, setInputTransaction] = useState<InputTransaction>({
     nominal: "",
     category: "",
     describtions: "",
     date: new Date().toISOString().split("T")[0],
   });
 
-  const handleChange = (e) =>
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setInputTransaction({
       ...inputTransaction,
       [e.target.name]: e.target.value,
     });
 
-  const handleSave = async (e) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      formType === "input"
-        ? await addTransaction(user.uid, inputTransaction)
-        : await updateTransaction(user.uid, docId, inputTransaction);
+      if (!user) return;
+
+      if (formType === "input") {
+        await addTransaction(user.uid, inputTransaction);
+      } else {
+        await updateTransaction(user.uid, docId, inputTransaction);
+      }
+
       onCancel();
-    } catch (err) {
+    } catch (err: any) {
       console.log(err.message);
     }
   };
 
   useEffect(() => {
-    if (formType === "edit") {
-      const { createAt, id, ...restData } = dataTransaction[0];
+    if (formType === "edit" && dataTransaction) {
+      const { createAt, id, date, ...restData } = dataTransaction;
       setDocId(id);
-      const formattedDate = format(new Date(restData.date), "yyyy-MM-dd");
-      const newData = {
-        ...restData,
-        date: formattedDate,
-      };
 
-      setInputTransaction(newData);
+      const formattedDate = new Date(date.seconds * 1000)
+        .toISOString()
+        .split("T")[0];
+
+      setInputTransaction({
+        ...restData,
+        nominal: String(restData.nominal),
+        date: formattedDate,
+      });
     }
-  }, []);
+  }, [formType, dataTransaction]);
 
   return (
     <Overlay>
@@ -78,7 +110,8 @@ export default function TransactionForm({
           placeholder="Nominal"
           name="nominal"
           onChange={handleChange}
-        ></InputBase>
+          autoComplete="off"
+        />
         <p className="mt-4">Spend Category</p>
         <SelectBase
           className="border p-2 rounded-md w-full text-[#333]"
@@ -86,6 +119,7 @@ export default function TransactionForm({
           name="category"
           onChange={handleChange}
           options={selectOptions}
+          autoComplete="off"
         />
         <p className="mt-4">Describtions</p>
         <InputBase
@@ -95,7 +129,8 @@ export default function TransactionForm({
           placeholder="Describtions"
           name="describtions"
           onChange={handleChange}
-        ></InputBase>
+          autoComplete="off"
+        />
         <p className="mt-4">Date</p>
         <InputBase
           className="border p-2 rounded-md w-full text-[#333]"
@@ -104,7 +139,8 @@ export default function TransactionForm({
           placeholder="Date"
           name="date"
           onChange={handleChange}
-        ></InputBase>
+          autoComplete="off"
+        />
 
         <div className="flex flex-col gap-y-3 mt-4">
           <ButtonBase
@@ -115,7 +151,7 @@ export default function TransactionForm({
           </ButtonBase>
           <ButtonBase
             className="w-full rounded-md py-1 text-[#333] text-center cursor-pointer font-bold"
-            onClick={() => onCancel()}
+            onClick={onCancel}
           >
             Cancel
           </ButtonBase>

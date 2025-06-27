@@ -43,9 +43,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-      {showTransactionForm && (
-        <TransactionForm onCancel={toggleShowInput} user={user} />
-      )}
+      {showTransactionForm && <TransactionForm onCancel={toggleShowInput} />}
     </div>
   );
 }
