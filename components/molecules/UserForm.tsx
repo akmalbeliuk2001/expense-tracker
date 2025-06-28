@@ -29,11 +29,13 @@ interface incomesUser {
 interface UserFormProps {
   onCancel: () => void;
   typeForm: "input" | "edit";
+  showCancel: boolean;
 }
 
 export default function UserForm({
   onCancel,
   typeForm = "input",
+  showCancel = true,
 }: UserFormProps) {
   const { user } = useAuth();
   const [name, setName] = useState("");
@@ -91,8 +93,11 @@ export default function UserForm({
     if (!user) return;
     const unsubscribe = getUserData(user.uid, (dataUser: incomesUser) => {
       if (!dataUser) return;
-      setName(dataUser.name);
-      setIncomes(dataUser.income);
+      setName(dataUser.name || "");
+      const incomesData = Array.isArray(dataUser.income) ? dataUser.income : [];
+      setIncomes(
+        incomesData.length > 0 ? incomesData : [{ source: "", nominal: "" }]
+      );
     });
 
     return () => unsubscribe();
@@ -102,7 +107,7 @@ export default function UserForm({
     <Overlay>
       <div className="bg-[#F5F5F7] border rounded-lg p-4 w-full max-w-[500px]">
         <h1 className="text-3xl font-bold text-center w-full mb-5 text-[#333] capitalize">
-          Your Data
+          <span className="capitalize">{typeForm}</span> Your Data
         </h1>
         <p>Name</p>
         <InputBase
@@ -168,14 +173,16 @@ export default function UserForm({
           >
             {typeForm === "input" ? "Save" : "Update"}
           </ButtonBase>
-          <ButtonBase
-            className="w-full rounded-md py-1 text-[#333] text-center cursor-pointer font-bold"
-            onClick={() => {
-              onCancel();
-            }}
-          >
-            Cancel
-          </ButtonBase>
+          {showCancel && (
+            <ButtonBase
+              className="w-full rounded-md py-1 text-[#333] text-center cursor-pointer font-bold"
+              onClick={() => {
+                onCancel();
+              }}
+            >
+              Cancel
+            </ButtonBase>
+          )}
         </div>
       </div>
       {showConfrimation && (

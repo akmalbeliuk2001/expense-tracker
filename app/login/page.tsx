@@ -7,6 +7,9 @@ import { login } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+
 import InputBase from "@/components/atoms/InputBase";
 import ButtonBase from "@/components/atoms/ButtonBase";
 
@@ -22,8 +25,20 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      await login(dataUser.email, dataUser.password);
-      router.push("/dashboard");
+      const userCredential = await login(dataUser.email, dataUser.password);
+      const uid = userCredential.user.uid;
+
+      const docRef = doc(db, "users", uid);
+      const docSnap = await getDoc(docRef);
+      const userData = docSnap.data();
+      const isValidUser =
+        docSnap.exists() && userData && Object.keys(userData).length > 0;
+
+      if (isValidUser) {
+        router.push("/dashboard");
+      } else {
+        router.push("/incomes");
+      }
     } catch (err: any) {
       console.log(err.message);
     }
