@@ -47,7 +47,7 @@ export default function SaldoInformation({
   }, [user]);
 
   return (
-    <div className="w-full border-2 rounded-xl p-4 h-max text-lg">
+    <div className="w-full border-2 rounded-xl p-2 lg:p-4 h-max text-base lg:text-lg">
       <div className="flex flex-col gap-y-1 pb-3">
         {incomes.map((income, index) => (
           <div key={index} className="w-full flex justify-between ">

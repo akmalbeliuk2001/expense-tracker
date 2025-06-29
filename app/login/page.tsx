@@ -2,11 +2,9 @@
 
 import Link from "next/link";
 import React from "react";
-
+import { useState } from "react";
 import { login } from "@/lib/auth";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
@@ -46,10 +44,10 @@ export default function LoginPage() {
 
   return (
     <div className="bg-white w-full h-screen flex items-center justify-center px-4">
-      <div className="bg-[#F5F5F7] border rounded-lg p-4 w-full max-w-[500px]">
-        <div className="flex flex-col items-center gap-y-2 mb-5 w-full text-[#333]">
+      <div className="bg-[#F5F5F7] border rounded-lg p-4 w-full max-w-[500px] text-base md:text-lg">
+        <div className="flex flex-col items-center gap-y-2 mb-3 w-full text-[#333]">
           <h1 className="text-3xl font-bold">Hallo!</h1>
-          <p className="text-md text-center">
+          <p className="text-center">
             Hi! Hope everything’s <u>going well</u> for you today!
           </p>
         </div>
