@@ -1,7 +1,4 @@
 "use client";
-
-import { Concert_One } from "next/font/google";
-
 interface RekapTableProps {
   data: {
     category: string;
@@ -10,13 +7,6 @@ interface RekapTableProps {
 }
 
 export default function RekapTable({ data }: RekapTableProps) {
-  console.log({ data });
-  // if (!data || data.length === 0) {
-  //   return (
-  //     <p className="text-gray-500 mt-4">Tidak ada data untuk ditampilkan.</p>
-  //   );
-  // }
-
   return (
     <div className="w-full bg-[#F5F5F7] p-4 text-[#333] border rounded-xl text-lg">
       <h2 className="text-lg lg:text-2xl font-semibold mb-3">

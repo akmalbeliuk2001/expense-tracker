@@ -39,13 +39,6 @@ export default function TransactionForm({
   formType = "input",
 }: TransactionFormProps) {
   const { user } = useAuth();
-  const selectOptions = [
-    { id: "", label: "Pilih Kategori" },
-    { id: "makan", label: "Makan" },
-    { id: "hobi", label: "Hobi" },
-    { id: "transport", label: "Transportasi" },
-    { id: "lainnya", label: "Lainnya" },
-  ];
   const [docId, setDocId] = useState("");
 
   const [inputTransaction, setInputTransaction] = useState<InputTransaction>({
@@ -118,7 +111,6 @@ export default function TransactionForm({
           value={inputTransaction.category}
           name="category"
           onChange={handleChange}
-          options={selectOptions}
           autoComplete="off"
         />
         <p className="mt-4">Describtions</p>
