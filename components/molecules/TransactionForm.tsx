@@ -48,11 +48,15 @@ export default function TransactionForm({
     date: new Date().toISOString().split("T")[0],
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    console.log(e.target.value);
     setInputTransaction({
       ...inputTransaction,
       [e.target.name]: e.target.value,
     });
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();

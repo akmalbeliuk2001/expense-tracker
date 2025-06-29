@@ -55,7 +55,7 @@ export default function SelectBase({
       {...props}
     >
       {options.map((option) => (
-        <option key={option.id} value={option.id}>
+        <option key={option.id} value={option.label}>
           {option.label}
         </option>
       ))}
