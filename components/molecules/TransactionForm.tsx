@@ -39,13 +39,6 @@ export default function TransactionForm({
   formType = "input",
 }: TransactionFormProps) {
   const { user } = useAuth();
-  const selectOptions = [
-    { id: "", label: "Pilih Kategori" },
-    { id: "makan", label: "Makan" },
-    { id: "hobi", label: "Hobi" },
-    { id: "transport", label: "Transportasi" },
-    { id: "lainnya", label: "Lainnya" },
-  ];
   const [docId, setDocId] = useState("");
 
   const [inputTransaction, setInputTransaction] = useState<InputTransaction>({
@@ -55,11 +48,15 @@ export default function TransactionForm({
     date: new Date().toISOString().split("T")[0],
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    console.log(e.target.value);
     setInputTransaction({
       ...inputTransaction,
       [e.target.name]: e.target.value,
     });
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,7 +115,6 @@ export default function TransactionForm({
           value={inputTransaction.category}
           name="category"
           onChange={handleChange}
-          options={selectOptions}
           autoComplete="off"
         />
         <p className="mt-4">Describtions</p>
