@@ -2,11 +2,6 @@ import { ChangeEvent, SelectHTMLAttributes, useEffect, useState } from "react";
 import { getUserData } from "@/lib/firestore";
 import { useAuth } from "@/context/AuthContext";
 
-interface Option {
-  id: string | number;
-  label: string;
-}
-
 interface categoriesItem {
   id: string;
   label: string;
@@ -27,7 +22,9 @@ export default function SelectBase({
   ...props
 }: SelectBaseProps) {
   const { user } = useAuth();
-  const [options, setOptions] = useState<categoriesItem[]>([]);
+  const [options, setOptions] = useState<categoriesItem[]>([
+    { id: "", label: "Select Category" },
+  ]);
 
   useEffect(() => {
     if (!user) return;
@@ -36,7 +33,10 @@ export default function SelectBase({
       user.uid,
       (dataUser: { categories: categoriesItem[] }) => {
         if (dataUser) {
-          setOptions(dataUser.categories);
+          setOptions([
+            { id: "", label: "Select Category" },
+            ...dataUser.categories,
+          ]);
         } else {
           console.warn("User document not found");
         }

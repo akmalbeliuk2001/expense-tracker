@@ -222,7 +222,7 @@ export default function UserForm({
           <p className="mt-4">Expenditure Category</p>
           <div className="flex flex-col gap-y-2">
             {category.map((c, index) => (
-              <div className="flex items-center gap-x-2">
+              <div key={index} className="flex items-center gap-x-2">
                 <InputBase
                   key={index}
                   className="border p-2 rounded-md w-full text-[#333]"

@@ -28,7 +28,7 @@ interface RecapChartProps {
 export default function RecapChart({ data }: RecapChartProps) {
   return (
     <div className="w-full h-80 bg-[#F5F5F7] border border-[#333] p-4 rounded-xl shadow text-[#333]">
-      <h2 className="text-lg lg:text-2xl font-semibold">
+      <h2 className="text-lg lg:text-2xl font-semibold mb-4">
         Expense Recap per Category
       </h2>
       {!data || data.length === 0 ? (
