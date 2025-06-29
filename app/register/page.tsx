@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import React from "react";
-
 import { useState } from "react";
 import { register } from "@/lib/auth";
 import { useRouter } from "next/navigation";
@@ -31,7 +30,7 @@ export default function RegisterPage() {
 
   return (
     <div className="bg-white w-full h-screen flex items-center justify-center px-4">
-      <div className="bg-[#F5F5F7] border rounded-lg p-4 w-full max-w-[500px]">
+      <div className="bg-[#F5F5F7] border rounded-lg p-4 w-full max-w-[500px] text-base md:text-lg">
         <div className="text-3xl font-bold text-center w-full mb-5 text-[#333]">
           Create Your Account Here
         </div>

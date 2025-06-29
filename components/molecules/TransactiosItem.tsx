@@ -42,12 +42,12 @@ export default function TransactionItem({
 
   return (
     <>
-      <div className="w-full bg-[#F5F5F7] border-2 py-3 px-3 rounded-xl text-lg">
+      <div className="w-full bg-[#F5F5F7] border-2 py-3 px-3 rounded-xl text-base lg:text-xl">
         <div className="flex items-center justify-between">
           <div className="bg-[#333] w-max text-white px-3 py-1 rounded-[24px]">
             Rp {Number(dataTransaction.nominal).toLocaleString()}
           </div>
-          <div className="flex gap-x-2 text-3xl">
+          <div className="flex gap-x-2 text-xl lg:text-3xl">
             <MdEdit
               className="cursor-pointer text-[#333]"
               onClick={() => setShowTransactionForm(true)}

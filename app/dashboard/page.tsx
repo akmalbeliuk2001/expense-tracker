@@ -27,10 +27,10 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="w-full h-screen flex items-center justify-center">
+    <div className="w-full h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-[1024px] mx-auto">
         <HeaderActions />
-        <div className="flex gap-x-4 mt-8">
+        <div className="flex flex-col md:flex-row gap-4 mt-4 lg:mt-6">
           <div className="w-full">
             <TransactionLists
               user={user}
@@ -38,7 +38,7 @@ export default function DashboardPage() {
               addTransaction={toggleShowInput}
             />
           </div>
-          <div className="w-full max-w-[300px]">
+          <div className="w-full md:max-w-[300px]">
             <SaldoInformation user={user} totalExpends={totalExpends} />
           </div>
         </div>
