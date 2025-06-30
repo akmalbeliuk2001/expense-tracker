@@ -3,7 +3,7 @@ import ButtonBase from "@/components/atoms/ButtonBase";
 
 export default function Home() {
   return (
-    <div className="w-full h-screen flex items-center justify-center">
+    <div className="w-full h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-[1024px] mx-auto">
         <div>
           <h1 className="text-[100px] leading-20">Your money, your move.</h1>
