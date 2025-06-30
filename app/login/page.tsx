@@ -3,10 +3,12 @@
 import Link from "next/link";
 import React from "react";
 import { useState } from "react";
-import { login } from "@/lib/auth";
+import { login, signInWithGoogle } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+
+import { FaGoogle } from "react-icons/fa";
 
 import InputBase from "@/components/atoms/InputBase";
 import ButtonBase from "@/components/atoms/ButtonBase";
@@ -39,6 +41,28 @@ export default function LoginPage() {
       }
     } catch (err: any) {
       console.log(err.message);
+      alert("Login gagal. Silakan periksa kembali email dan password.");
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithGoogle();
+      const uid = result.user.uid;
+
+      const docRef = doc(db, "users", uid);
+      const docSnap = await getDoc(docRef);
+      const userData = docSnap.data();
+      const isValidUser =
+        docSnap.exists() && userData && Object.keys(userData).length > 0;
+
+      if (isValidUser) {
+        router.push("/dashboard");
+      } else {
+        router.push("/incomes");
+      }
+    } catch (err: any) {
+      console.error("Google Sign-In error:", err.message);
     }
   };
 
@@ -77,6 +101,16 @@ export default function LoginPage() {
         >
           Log In
         </ButtonBase>
+        <ButtonBase
+          className=" w-full cursor-pointer mt-3"
+          onClick={handleGoogleLogin}
+        >
+          <div className="w-fit mx-auto flex items-center gap-x-2 cursor-pointer">
+            <FaGoogle />
+            <p>Login dengan Google</p>
+          </div>
+        </ButtonBase>
+
         <p className="mt-5">
           <strong>Dont Have Account? </strong>
           <Link className="cursor-pointer" href="/register" prefetch={false}>
