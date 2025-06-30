@@ -43,9 +43,9 @@ export default function RecapPage() {
   }, [user]);
 
   return (
-    <div className="bg-white w-full h-screen flex-col flex items-center justify-center px-4">
-      <div className="w-full max-w-[1024px] mx-auto ">
-        <div className="flex items-center justify-between">
+    <div className="bg-white w-full h-screen flex-col p-4 md:flex items-center justify-center overflow-auto">
+      <div className="w-full max-w-[1024px] mx-auto">
+        <div className="flex w-full items-center justify-between">
           <ButtonBase className="bg-[#333] w-max p-1.5 rounded-full">
             <Link href="/dashboard" prefetch={false}>
               <FaArrowLeft className="text-white text-xs" />
