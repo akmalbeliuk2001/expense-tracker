@@ -117,12 +117,18 @@ export default function UserForm({
     };
 
     try {
-      typeForm === "input"
-        ? await addUserDAta(user.uid, finalData)
-        : await updateUserData(user.uid, finalData);
+      if (typeForm === "input") {
+        await addUserDAta(user.uid, finalData);
+      } else {
+        await updateUserData(user.uid, finalData);
+      }
       onCancel();
-    } catch (err: any) {
-      console.log(err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      } else {
+        console.error("Unexpected error", err);
+      }
     }
   };
 

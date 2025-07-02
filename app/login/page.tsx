@@ -39,9 +39,12 @@ export default function LoginPage() {
       } else {
         router.push("/incomes");
       }
-    } catch (err: any) {
-      console.log(err.message);
-      alert("Login gagal. Silakan periksa kembali email dan password.");
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      } else {
+        console.error("Unexpected error", err);
+      }
     }
   };
 
@@ -61,8 +64,12 @@ export default function LoginPage() {
       } else {
         router.push("/incomes");
       }
-    } catch (err: any) {
-      console.error("Google Sign-In error:", err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      } else {
+        console.error("Unexpected error", err);
+      }
     }
   };
 

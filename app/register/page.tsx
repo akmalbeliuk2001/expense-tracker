@@ -23,8 +23,12 @@ export default function RegisterPage() {
     try {
       await register(dataAccount.email, dataAccount.password);
       router.push("/login");
-    } catch (err: any) {
-      console.log(err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      } else {
+        console.error("Unexpected error", err);
+      }
     }
   };
 

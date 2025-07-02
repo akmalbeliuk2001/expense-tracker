@@ -12,40 +12,34 @@ import RecapChart from "@/components/organisms/RecapCharts";
 import RecapTable from "@/components/organisms/RecapTable";
 
 // ✅ Tambahkan ini
-type TransactionItem = {
+interface TransactionItem {
   category: string;
   nominal: number;
-  [key: string]: any;
-};
+}
 
 export default function RecapPage() {
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
   const [totalPerCategory, setTotalPerCategory] = useState<
     { category: string; total: number }[]
   >([]);
 
   useEffect(() => {
     if (!user) return;
+
     const unsubscribe = getTransactions(user.uid, (data: TransactionItem[]) => {
-      const kategoriTotal = data.reduce((acc, item) => {
-        const kategori = item.category;
-        const nominal = item.nominal;
-
-        if (!acc[kategori]) acc[kategori] = 0;
-        acc[kategori] += nominal;
-
+      const kategoriTotal = data.reduce<Record<string, number>>((acc, item) => {
+        acc[item.category] = (acc[item.category] ?? 0) + item.nominal;
         return acc;
-      }, {} as Record<string, number>);
+      }, {});
 
-      const totalArray = Object.entries(kategoriTotal).map(
-        ([category, total]) => ({
+      setTotalPerCategory(
+        Object.entries(kategoriTotal).map(([category, total]) => ({
           category,
           total,
-        })
+        }))
       );
-
-      setTotalPerCategory(totalArray);
     });
+
     return () => unsubscribe();
   }, [user]);
 
