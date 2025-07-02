@@ -70,14 +70,18 @@ export default function TransactionForm({
       }
 
       onCancel();
-    } catch (err: any) {
-      console.log(err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      } else {
+        console.error("Unexpected error", err);
+      }
     }
   };
 
   useEffect(() => {
     if (formType === "edit" && dataTransaction) {
-      const { createAt, id, date, ...restData } = dataTransaction;
+      const { id, date, ...restData } = dataTransaction;
       setDocId(id);
 
       const formattedDate = new Date(date.seconds * 1000)

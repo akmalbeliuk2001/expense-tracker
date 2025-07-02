@@ -35,8 +35,12 @@ export default function TransactionItem({
     try {
       await deleteTransaction(user.uid, dataTransaction.id);
       setShowConfirmation(false);
-    } catch (err: any) {
-      console.log(err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      } else {
+        console.error("Unexpected error", err);
+      }
     }
   };
 

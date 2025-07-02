@@ -19,8 +19,12 @@ export default function HeaderActions() {
     try {
       await logout();
       router.push("/");
-    } catch (error: any) {
-      console.error("Failed logout:", error.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      } else {
+        console.error("Unexpected error", err);
+      }
     }
   };
 
