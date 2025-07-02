@@ -43,7 +43,9 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-      {showTransactionForm && <TransactionForm onCancel={toggleShowInput} />}
+      {showTransactionForm && (
+        <TransactionForm onCancel={toggleShowInput} formType="input" />
+      )}
     </div>
   );
 }

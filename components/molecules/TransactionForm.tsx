@@ -29,7 +29,7 @@ interface InputTransaction {
 
 interface TransactionFormProps {
   onCancel: () => void;
-  dataTransaction: RawTransaction;
+  dataTransaction?: RawTransaction;
   formType: "input" | "edit";
 }
 
