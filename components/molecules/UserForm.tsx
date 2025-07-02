@@ -40,7 +40,7 @@ interface IncomesUser {
 interface UserFormProps {
   onCancel: () => void;
   typeForm: "input" | "edit";
-  showCancel: boolean;
+  showCancel?: boolean;
 }
 
 export default function UserForm({
