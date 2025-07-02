@@ -11,6 +11,13 @@ import HeaderActions from "@/components/molecules/HeaderAction";
 import RecapChart from "@/components/organisms/RecapCharts";
 import RecapTable from "@/components/organisms/RecapTable";
 
+// ✅ Tambahkan ini
+type TransactionItem = {
+  category: string;
+  nominal: number;
+  [key: string]: any;
+};
+
 export default function RecapPage() {
   const { user, loading } = useAuth();
   const [totalPerCategory, setTotalPerCategory] = useState<
@@ -19,7 +26,7 @@ export default function RecapPage() {
 
   useEffect(() => {
     if (!user) return;
-    const unsubscribe = getTransactions(user.uid, (data) => {
+    const unsubscribe = getTransactions(user.uid, (data: TransactionItem[]) => {
       const kategoriTotal = data.reduce((acc, item) => {
         const kategori = item.category;
         const nominal = item.nominal;
@@ -28,7 +35,7 @@ export default function RecapPage() {
         acc[kategori] += nominal;
 
         return acc;
-      }, {});
+      }, {} as Record<string, number>);
 
       const totalArray = Object.entries(kategoriTotal).map(
         ([category, total]) => ({
