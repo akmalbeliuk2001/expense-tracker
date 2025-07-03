@@ -120,7 +120,7 @@ export default function TransactionForm({
           onChange={handleChange}
           autoComplete="off"
         />
-        <p className="mt-4">Describtions</p>
+        <p className="mt-4">Description</p>
         <InputBase
           className="border p-2 rounded-md w-full text-[#333]"
           value={inputTransaction.describtions}
