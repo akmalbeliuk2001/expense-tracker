@@ -34,7 +34,7 @@ export default function HeaderActions() {
         <UserForm onCancel={toggleShowUserForm} typeForm="edit" />
       )}
 
-      <div className="w-full flex justify-end items-center gap-x-2 mb-4">
+      <div className="w-full flex justify-end items-center gap-x-2">
         <IoMdSettings
           className="text-2xl cursor-pointer"
           onClick={toggleShowUserForm}
