@@ -52,7 +52,15 @@ export default function RecapPage() {
               <FaArrowLeft className="text-white text-xs" />
             </Link>
           </ButtonBase>
-          <HeaderActions />
+          <div className="flex gap-x-2">
+            <Link href="/recap/montly" prefetch={false}>
+              <div className="whitespace-nowrap bg-[#333] text-white  rounded-xl py-1 px-3">
+                Monthly Recap
+              </div>
+            </Link>
+
+            <HeaderActions />
+          </div>
         </div>
         <div className="flex flex-col md:flex-row items-start gap-6 md:gap-4 mt-4 lg:mt-6 w-full">
           <RecapChart data={totalPerCategory} />
